@@ -112,7 +112,7 @@ class EsxiHostUtils:
             query_type="net.transmitted.average")
         network_tx =  int(round(
             sum(stat_network_tx[0].value[0].value) /
-            self.statistics_interval_time,2)) * 1024
+            self.statistics_interval_time/8,2)) * 1024
         return network_tx * 1024
 
     def get_network_rx(self):
@@ -126,8 +126,7 @@ class EsxiHostUtils:
     def get_cpu_usage(self):
         state_cpu_usage = self.build_query(query_type="cpu.usage.average")
         cpu_usage = float(
-            round((((sum(state_cpu_usage[0].value[0].value))) / 100 /
-                   self.statistics_interval_time), 1))
+            round((((sum(state_cpu_usage[0].value[0].value))) /100), 2))
         return cpu_usage
 
     def get_disk_capacity_and_usage(self, content) -> tuple:
